@@ -7,12 +7,18 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
 
-// Create SQLite Database and Table if it doesn't exist
-$db = new PDO('sqlite:movies.db');
+try {
+    $db = new PDO("pgsql:host=localhost;port=5432;dbname=movie_db", "moviesterling", "password");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    header('Content-Type: application/json');
+    echo json_encode(["error" => $e->getMessage()]);
+    exit;
+}
 $db->exec("CREATE TABLE IF NOT EXISTS movies (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    author TEXT,
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255),
     rating INTEGER,
     image_path TEXT,
     notes TEXT
@@ -30,16 +36,17 @@ $app->add(function ($request, $handler) {
 // Route: Save Movie
 $app->post('/api/movies', function (Request $request, Response $response) use ($db) {
     $directory = __DIR__ . '/uploads';
-    if (!is_dir($directory)) mkdir($directory, 0777, true);
+    if (!is_dir($directory))
+        mkdir($directory, 0777, true);
 
     $uploadedFiles = $request->getUploadedFiles();
     $uploadedFile = $uploadedFiles['image'];
-    
+
     $filename = bin2hex(random_bytes(8)) . "." . pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
     $data = $request->getParsedBody();
-    
+
     $stmt = $db->prepare("INSERT INTO movies (title, author, rating, image_path, notes) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([$data['title'], $data['author'], $data['rating'], 'uploads/' . $filename, $data['notes']]);
 

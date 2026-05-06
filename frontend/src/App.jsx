@@ -43,6 +43,7 @@ function App() {
           type="text"
           placeholder="Movie Title"
           required
+          value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <br></br>
@@ -50,11 +51,13 @@ function App() {
           type="text"
           placeholder="Director/Author"
           required
+          value={formData.author}
           onChange={(e) => setFormData({ ...formData, author: e.target.value })}
         />
         <br></br>
         <textarea
           placeholder="Notes"
+          value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
         />
         <br></br>
