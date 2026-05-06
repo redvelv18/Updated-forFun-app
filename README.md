@@ -32,16 +32,16 @@ Ensure PostgreSQL is running and create the necessary database and table:
 
 ### SQL
 
-CREATE DATABASE movie_db;
--- Connect to movie_db and run:
-CREATE TABLE movies (
-id SERIAL PRIMARY KEY,
-title VARCHAR(255) NOT NULL,
-author VARCHAR(255),
-rating INTEGER,
-notes TEXT,
-image_path TEXT
-);
+    CREATE DATABASE movie_db;
+  
+    CREATE TABLE movies (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255),
+    rating INTEGER,
+    notes TEXT,
+    image_path TEXT
+    );
 
 ## Backend Configuration
 
