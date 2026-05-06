@@ -1,3 +1,59 @@
+# My Movie Journal
+
+A full-stack web application designed to track and review movies. This project features a React frontend, a PHP API, and a PostgreSQL database.
+
+### Features
+
+    Movie Logging: Record movie titles and their directors/authors.
+
+    Star Rating System: Rate movies on a 1-5 star scale.
+
+    Personal Notes: Add custom reviews or notes for every entry.
+
+    Image Uploads: Attach movie posters or custom images to journal entries.
+
+    Dynamic Gallery: View logged movies in a responsive grid layout.
+
+### Tech Stack
+
+    Frontend: React.js, Axios, CSS3
+
+    Backend: PHP (PDO)
+
+    Database: PostgreSQL
+
+    Environment: WSL (Ubuntu)
+
+# Setup and Installation -
+
+## Database Setup
+
+Ensure PostgreSQL is running and create the necessary database and table:
+
+### SQL
+
+CREATE DATABASE movie_db;
+-- Connect to movie_db and run:
+CREATE TABLE movies (
+id SERIAL PRIMARY KEY,
+title VARCHAR(255) NOT NULL,
+author VARCHAR(255),
+rating INTEGER,
+notes TEXT,
+image_path TEXT
+);
+
+## Backend Configuration
+
+Navigate to the api folder and start the PHP server:
+    php -S localhost:8000
+
+## Frontend Configuration
+Install dependencies and start the React development server:
+    cd frontend
+    npm install
+    npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
